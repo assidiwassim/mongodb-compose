@@ -1,12 +1,12 @@
-db = db.getSiblingDB('db-s1');
+db = db.getSiblingDB('mydb');
 
 db.createUser({
-  user: 'db-user-s1',
-  pwd: 'db-pass-s1',
+  user: 'db-user',
+  pwd: 'db-pass',
   roles: [
     {
       role: 'readWrite',
-      db: 'db-s1'
+      db: 'mydb'
     }
   ]
 });
