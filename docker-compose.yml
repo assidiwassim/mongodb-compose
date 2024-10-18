@@ -2,29 +2,35 @@ version: "3.9"
 name: "mongodb-stack"
 
 services:
+  # MongoDB service configuration
   mongodb-service:
-    container_name: mongodb-container
-    image: mongo:latest
-    restart: always
+    container_name: mongodb-container  # Name of the container
+    image: mongo:latest  # Use the latest MongoDB image
+    restart: always  # Always restart the container if it stops
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=mongodb-root-user
-      - MONGO_INITDB_ROOT_PASSWORD=mongodb-root-pass
-      - MONGO_INITDB_DATABASE=mydb
+      # Environment variables for MongoDB initialization
+      - MONGO_INITDB_ROOT_USERNAME=mongodb-root-user  # Root username
+      - MONGO_INITDB_ROOT_PASSWORD=mongodb-root-pass  # Root password
+      - MONGO_INITDB_DATABASE=mydb  # Default database to create
     ports:
-      - 27017:27017
+      - "27017:27017"  # Expose port 27017 for MongoDB access
     volumes:
-      - mongodb-volume:/data/db
-      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      # Data persistence and initialization
+      - mongodb-volume:/data/db  # Persistent storage for MongoDB data
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro  # Initialization script (read-only)
     networks:
-      - mongodb-network
+      - mongodb-network  # Connect to the specified network
 
+# Define persistent volumes
 volumes:
   mongodb-volume:
-    name: mongodb-volume
+    name: mongodb-volume  # Name of the persistent volume
 
+# Define custom networks
 networks:
   mongodb-network:
-    name: mongodb-network
+    name: mongodb-network  # Name of the custom network
 
-#SUPER-ADMIN = mongodb://mongodb-root-user:mongodb-root-pass@localhost:27017
-#DB-ADMIN = mongodb://db-user:db-pass@localhost:27017/mydb
+# Connection strings
+# SUPER-ADMIN = mongodb://mongodb-root-user:mongodb-root-pass@localhost:27017
+# DB-ADMIN = mongodb://db-user:db-pass@localhost:27017/mydb
